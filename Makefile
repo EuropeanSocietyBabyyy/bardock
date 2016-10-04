@@ -624,7 +624,27 @@ else
 KBUILD_CFLAGS	+= -O2
 endif
 
-# Disable maybe-uninitialized warnings
+# Strip linker
+LDFLAGS		+= --strip-debug -O2
+
+# Optimization flags
+KBUILD_CFLAGS	+= -g0 -DNDEBUG \
+		   -fgraphite \
+		   -fgraphite-identity \
+		   -fivopts \
+		   -floop-block \
+		   -floop-interchange \
+		   -floop-strip-mine \
+		   -fmodulo-sched-allow-regmoves \
+		   -fomit-frame-pointer \
+		   -ftree-loop-distribution \
+		   -ftree-loop-linear
+
+# These flags need a special toolchain so split them off
+KBUILD_CFLAGS	+= $(call cc-option,-mlow-precision-recip-sqrt,) \
+		   $(call cc-option,-mpc-relative-literal-loads,)
+
+# Disable all maybe-uninitialized warnings
 KBUILD_CFLAGS	+= $(call cc-disable-warning,maybe-uninitialized,)
 
 # Disable unused-constant-variable warnings
