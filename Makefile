@@ -636,6 +636,9 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning,tautological-compare,)
 # Needed to unbreak GCC 7.x and above
 KBUILD_CFLAGS   += $(call cc-option,-fno-store-merging,)
 
+# Disable parentheses warnings
+KBUILD_CFLAGS	+= $(call cc-disable-warning,parentheses,)
+
 # Tell gcc to never replace conditional load with a non-conditional one
 KBUILD_CFLAGS	+= $(call cc-option,--param=allow-store-data-races=0)
 
